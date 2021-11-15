@@ -22,7 +22,7 @@ public class EchoClient {
 		BufferedReader stdIn = null;
 		BufferedReader socIn = null;
 
-		if (args.length != 2) {
+		if (args.length != 3) {
 			System.out.println("Usage: java EchoClient <EchoServer host> <EchoServer port>");
 			System.exit(1);
 		}
@@ -45,7 +45,7 @@ public class EchoClient {
 		String line;
 		while (true) {
 			//line = stdIn.readLine();
-			line = "hi";
+			line = args[2];
 			if (line.equals("."))
 				break;
 			socOut.println(line);
