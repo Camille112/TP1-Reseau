@@ -10,11 +10,11 @@ package stream;
 import java.io.*;
 import java.net.*;
 
-public class ClientThread extends Thread {
+public class ClientOutThread extends Thread {
 
 	private Socket clientSocket;
 
-	ClientThread(Socket s) {
+	ClientOutThread(Socket s) {
 		this.clientSocket = s;
 	}
 
@@ -23,16 +23,10 @@ public class ClientThread extends Thread {
 	 * 
 	 * @param clientSocket the client socket
 	 **/
-	public void run() {
+	public void send(String line) {
 		try {
-			BufferedReader socIn = null;
-			socIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			PrintStream socOut = new PrintStream(clientSocket.getOutputStream());
-			while (true) {
-				String line = socIn.readLine();
-				System.out.println("received : " + line);
-				socOut.println(line + "back");
-			}
+			socOut.println(line);
 		} catch (Exception e) {
 			System.err.println("Error in EchoServer:" + e);
 		}

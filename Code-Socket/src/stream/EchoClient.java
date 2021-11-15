@@ -8,6 +8,7 @@ package stream;
 
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
 public class EchoClient {
 
@@ -22,30 +23,33 @@ public class EchoClient {
 		BufferedReader stdIn = null;
 		BufferedReader socIn = null;
 
-		if (args.length != 3) {
-			System.out.println("Usage: java EchoClient <EchoServer host> <EchoServer port>");
-			System.exit(1);
-		}
-
 		try {
 			// creation socket ==> connexion
-			echoSocket = new Socket("", Integer.valueOf(args[1]));
+			echoSocket = new Socket("", 11);
 			socIn = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
 			socOut = new PrintStream(echoSocket.getOutputStream());
 			stdIn = new BufferedReader(new InputStreamReader(System.in));
+			
 			System.out.println("--client");
 		} catch (UnknownHostException e) {
-			System.err.println("Don't know about host:" + args[0]);
+			//System.err.println("Don't know about host:" + args[0]);
 			System.exit(1);
 		} catch (IOException e) {
-			System.err.println("Couldn't get I/O for " + "the connection to:" + args[0]);
+			//System.err.println("Couldn't get I/O for " + "the connection to:" + args[0]);
 			System.exit(1);
 		}
-
+		
+		
 		String line;
+		Scanner sc = new Scanner(System.in);
 		while (true) {
 			//line = stdIn.readLine();
-			line = args[2];
+		    //sc.nextLine();
+			//System.out.println("test");
+		    String str = sc.nextLine();
+			//System.out.println("written : " + str);
+			
+			line = str;
 			if (line.equals("."))
 				break;
 			socOut.println(line);

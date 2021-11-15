@@ -10,12 +10,28 @@ package stream;
 import java.io.*;
 import java.net.*;
 
-public class ClientThread extends Thread {
+public class ClientInThread extends Thread {
 
 	private Socket clientSocket;
+	private String line;
+	private boolean newMsg;
 
-	ClientThread(Socket s) {
+	ClientInThread(Socket s) {
 		this.clientSocket = s;
+		this.line = "";
+		this.newMsg=false;
+	}
+	
+	public String getLine() {
+		return line;
+	}
+
+	public boolean getNewMsg() {
+		return newMsg;
+	}
+
+	public void setNewMsg(boolean newMsg) {
+		this.newMsg = newMsg;
 	}
 
 	/**
@@ -27,11 +43,13 @@ public class ClientThread extends Thread {
 		try {
 			BufferedReader socIn = null;
 			socIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			PrintStream socOut = new PrintStream(clientSocket.getOutputStream());
 			while (true) {
-				String line = socIn.readLine();
+				line = socIn.readLine();
+				//if (!line.isBlank()) {
+					this.newMsg=true;
+				//}
 				System.out.println("received : " + line);
-				socOut.println(line + "back");
+				//server.sendToAll(line);
 			}
 		} catch (Exception e) {
 			System.err.println("Error in EchoServer:" + e);
