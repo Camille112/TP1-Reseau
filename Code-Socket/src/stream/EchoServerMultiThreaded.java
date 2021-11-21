@@ -24,31 +24,26 @@ public class EchoServerMultiThreaded {
 		ServerSocket connectionSocket;
 		ArrayList<ClientInThread> clientsIn = new ArrayList<ClientInThread>();
 		ArrayList<ClientOutThread> clientsOut = new ArrayList<ClientOutThread>();
-
+		AllClientsThread allClients = new AllClientsThread();
+		allClients.start();
 		try {
 			connectionSocket = new ServerSocket(11); // port
 			System.out.println("Server ready...");
 			while (true) {
-				System.out.println("----1");
-				for (ClientInThread clIn : clientsIn) {
-					System.out.println("----2");
-					if (clIn.getNewMsg()) {
-						System.out.println("newMsg");
-						for (ClientOutThread clOut : clientsOut) {
-							clOut.send(clIn.getLine());
-						}
-						clIn.setNewMsg(false);
-					}
-				}
 				Socket clientSocket = connectionSocket.accept();
 				// System.out.println("Connexion from:" + clientSocket.getInetAddress());
 				ClientInThread ctIn = new ClientInThread(clientSocket);
 				clientsIn.add(ctIn);
 				ClientOutThread ctOut = new ClientOutThread(clientSocket);
 				clientsOut.add(ctOut);
+				allClients.updateClients(clientsIn, clientsOut);
+				
+				for(ClientInThread cIn : allClients.getClientsIn()) {
+					System.out.println("Id thread : "+cIn.getId());
+				}
+					
 				ctIn.start();
 				ctOut.start();
-
 			}
 		} catch (Exception e) {
 			System.err.println("Error in EchoServer:" + e);

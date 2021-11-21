@@ -49,7 +49,6 @@ public class ClientInThread extends Thread {
 					this.newMsg=true;
 				//}
 				System.out.println("received : " + line);
-				//server.sendToAll(line);
 			}
 		} catch (Exception e) {
 			System.err.println("Error in EchoServer:" + e);
