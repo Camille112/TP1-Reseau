@@ -10,49 +10,45 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
+import controller.Controller;
+
 public class EchoClient {
-	String username = "";
-	Socket echoSocket = null;
-	PrintStream socOut = null;
-	BufferedReader socIn = null;
-	Scanner sc = null;
-	ClientThreadListener ctl;
+	private String username = "";
+	private Socket echoSocket = null;
+	private PrintStream socOut = null;
+	private BufferedReader socIn = null;
+	private Scanner sc = null;
+	private ClientThreadListener ctl;
+	private Controller controller;
 	
-	public EchoClient(String username, Scanner sc) {
+	public EchoClient(Controller controller, String username) {
 		try {
-			this.sc = sc;
+			this.controller = controller;
 			this.username = username;
 			echoSocket = new Socket("", 11);
 			socIn = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
 			socOut = new PrintStream(echoSocket.getOutputStream());
-
 			socOut.println(username);
 		} catch (Exception e) {
+			closeEverything();
+			System.err.println("Error in EchoClient :" + e);
+		}
+	}
+	
+	public void sendMessage(String messageToSend) {
+		socOut.println(username + " : " + messageToSend);
+		if(messageToSend.equals("STOP")) {
 			closeEverything();
 		}
 	}
 	
-	public void sendMessage() {
-		sc = new Scanner(System.in);
-		while(echoSocket.isConnected()) {
-			String messageToSend = sc.nextLine();
-			socOut.println(username + " : " + messageToSend);
-			if(messageToSend.equals("STOP")) {
-				closeEverything();
-				break;
-			}
-		}
-		sc.close();
-	}
-	
 	public void messageListener() {
-		ctl = new ClientThreadListener(echoSocket);
+		ctl = new ClientThreadListener(controller, echoSocket);
 		ctl.start();
 	}
 	
 	public void closeEverything() {
 		try {
-			sc.close();
 			socOut.close();
 			socIn.close();
 			echoSocket.close();
@@ -63,13 +59,4 @@ public class EchoClient {
 		}
 	}
 	
-	public static void main(String[] args) throws IOException {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter your username :");
-		String username = sc.nextLine();
-		
-		EchoClient ec = new EchoClient(username,sc);
-		ec.messageListener();
-		ec.sendMessage();
-	}
 }

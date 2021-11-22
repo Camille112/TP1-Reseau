@@ -33,7 +33,6 @@ public class ClientThread extends Thread {
 			this.socOut = new PrintStream(clientSocket.getOutputStream());
 			this.clientUsername = socIn.readLine();
 			clientThreads.add(this);
-
 			broadcastToAll(clientUsername + " has entered the chat.");
 		} catch (IOException e) {
 			closeEverything();
@@ -72,6 +71,7 @@ public class ClientThread extends Thread {
 					ct.getSocOut().println(messageFromClient);
 			} catch (Exception e) {
 				closeEverything();
+				System.err.println("Exception in ClientThread : "+e);
 			}
 
 		}

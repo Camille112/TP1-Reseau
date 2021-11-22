@@ -4,16 +4,21 @@ package stream;
 import java.io.*;
 import java.net.*;
 
+import controller.Controller;
+
 public class ClientThreadListener extends Thread {
 	private Socket socket;
 	private BufferedReader socIn;
+	private Controller controller;
 
-	ClientThreadListener(Socket s) {
+	ClientThreadListener(Controller controller, Socket s) {
+		this.controller = controller;
 		this.socket = s;
 		try {
 			this.socIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		} catch (IOException e) {
 			closeEverything();
+			System.err.println("Error in ClientThreadListener :" + e);
 		}
 	}
 
@@ -27,9 +32,10 @@ public class ClientThreadListener extends Thread {
 		while (socket.isConnected()) {
 			try {
 				messageReceived = socIn.readLine();
-				System.out.println(messageReceived);
+				controller.receiveMessage(messageReceived);
 			} catch (Exception e) {
 				closeEverything();
+				System.err.println("Error in ClientThreadListener :" + e);
 				break;
 			}
 		}
