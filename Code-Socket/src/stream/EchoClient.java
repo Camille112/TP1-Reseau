@@ -11,53 +11,65 @@ import java.net.*;
 import java.util.Scanner;
 
 public class EchoClient {
-
-	/**
-	 * main method accepts a connection, receives a message from client then sends
-	 * an echo to the client
-	 **/
-	public static void main(String[] args) throws IOException {
-
-		Socket echoSocket = null;
-		PrintStream socOut = null;
-		BufferedReader stdIn = null;
-		BufferedReader socIn = null;
-
+	String username = "";
+	Socket echoSocket = null;
+	PrintStream socOut = null;
+	BufferedReader socIn = null;
+	Scanner sc = null;
+	ClientThreadListener ctl;
+	
+	public EchoClient(String username, Scanner sc) {
 		try {
-			// creation socket ==> connexion
+			this.sc = sc;
+			this.username = username;
 			echoSocket = new Socket("", 11);
 			socIn = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
 			socOut = new PrintStream(echoSocket.getOutputStream());
-			stdIn = new BufferedReader(new InputStreamReader(System.in));
-			
-			System.out.println("--client");
-		} catch (UnknownHostException e) {
-			//System.err.println("Don't know about host:" + args[0]);
-			System.exit(1);
-		} catch (IOException e) {
-			//System.err.println("Couldn't get I/O for " + "the connection to:" + args[0]);
-			System.exit(1);
+
+			socOut.println(username);
+		} catch (Exception e) {
+			closeEverything();
 		}
-		
-		
-		String line;
-		Scanner sc = new Scanner(System.in);
-		while (true) {
-			//line = stdIn.readLine();
-		    //sc.nextLine();
-			//System.out.println("test");
-		    String str = sc.nextLine();
-			//System.out.println("written : " + str);
-			
-			line = str;
-			if (line.equals("."))
+	}
+	
+	public void sendMessage() {
+		sc = new Scanner(System.in);
+		while(echoSocket.isConnected()) {
+			String messageToSend = sc.nextLine();
+			socOut.println(username + " : " + messageToSend);
+			if(messageToSend.equals("STOP")) {
+				closeEverything();
 				break;
-			socOut.println(line);
-			System.out.println("echo: " + socIn.readLine());
+			}
 		}
-		socOut.close();
-		socIn.close();
-		stdIn.close();
-		echoSocket.close();
+		sc.close();
+	}
+	
+	public void messageListener() {
+		ctl = new ClientThreadListener(echoSocket);
+		ctl.start();
+	}
+	
+	public void closeEverything() {
+		try {
+			sc.close();
+			socOut.close();
+			socIn.close();
+			echoSocket.close();
+			ctl.closeEverything();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) throws IOException {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter your username :");
+		String username = sc.nextLine();
+		
+		EchoClient ec = new EchoClient(username,sc);
+		ec.messageListener();
+		ec.sendMessage();
 	}
 }

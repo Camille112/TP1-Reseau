@@ -7,9 +7,8 @@
 
 package stream;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.*;
-import java.util.ArrayList;
 
 public class EchoServerMultiThreaded {
 
@@ -22,36 +21,27 @@ public class EchoServerMultiThreaded {
 
 	public static void main(String args[]) {
 		ServerSocket connectionSocket;
-		ArrayList<ClientInThread> clientsIn = new ArrayList<ClientInThread>();
-		ArrayList<ClientOutThread> clientsOut = new ArrayList<ClientOutThread>();
-		AllClientsThread allClients = new AllClientsThread();
-		allClients.start();
+		Socket clientSocket = null;
 		try {
 			connectionSocket = new ServerSocket(11); // port
 			System.out.println("Server ready...");
-			while (true) {
-				Socket clientSocket = connectionSocket.accept();
-				// System.out.println("Connexion from:" + clientSocket.getInetAddress());
-				ClientInThread ctIn = new ClientInThread(clientSocket);
-				clientsIn.add(ctIn);
-				ClientOutThread ctOut = new ClientOutThread(clientSocket);
-				clientsOut.add(ctOut);
-				allClients.updateClients(clientsIn, clientsOut);
+			
+			while (!connectionSocket.isClosed()) {
+				clientSocket = connectionSocket.accept();
 				
-				for(ClientInThread cIn : allClients.getClientsIn()) {
-					System.out.println("Id thread : "+cIn.getId());
-				}
-					
-				ctIn.start();
-				ctOut.start();
+				ClientThread ct = new ClientThread(clientSocket);
+				ct.start();
+				
+
 			}
 		} catch (Exception e) {
+			try {
+				clientSocket.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			System.err.println("Error in EchoServer:" + e);
 		}
 	}
-
-	/*
-	 * public void sendToAll(String line) { for(ClientOutThread ctOut : clientsOut)
-	 * { ctOut.send(line); } }
-	 */
 }
