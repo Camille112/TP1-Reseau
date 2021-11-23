@@ -9,6 +9,7 @@ package stream;
 
 import java.io.IOException;
 import java.net.*;
+import java.util.ArrayList;
 
 public class EchoServerMultiThreaded {
 
@@ -26,13 +27,15 @@ public class EchoServerMultiThreaded {
 			connectionSocket = new ServerSocket(11); // port
 			System.out.println("Server ready...");
 			
+			ChatGroup generalChat = new ChatGroup("general",new ArrayList<String>());
+			
 			while (!connectionSocket.isClosed()) {
 				clientSocket = connectionSocket.accept();
 				
-				ClientThread ct = new ClientThread(clientSocket);
+				ClientThread ct = new ClientThread(clientSocket, generalChat);
+				generalChat.addClientThread(ct);
+				generalChat.addMember(ct.getClientUsername());
 				ct.start();
-				
-
 			}
 		} catch (Exception e) {
 			try {

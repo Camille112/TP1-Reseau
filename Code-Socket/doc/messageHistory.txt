@@ -31,3 +31,4 @@ a : #INIT
 a : #SENDMESSAGE#general#Hello
 a : #CREATEGROUP#Abc#a
 a : #DISCONNECT
+e : #INIT

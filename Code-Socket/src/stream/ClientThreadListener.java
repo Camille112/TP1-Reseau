@@ -34,7 +34,9 @@ public class ClientThreadListener extends Thread {
 				System.out.println("try");
 				messageReceived = socIn.readLine();
 				System.out.println("msgReceived"+messageReceived);
-				controller.receiveMessage(messageReceived);
+				if (!messageReceived.isBlank()) {
+					controller.receiveMessage(messageReceived);
+				}
 				System.out.println("receiveMessageSent");
 			} catch (Exception e) {
 				closeEverything();

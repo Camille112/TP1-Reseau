@@ -94,7 +94,7 @@ public class Chat extends JFrame implements WindowListener {
 		addWindowListener(this);
 			
 		controller.createEchoListener(username);
-		controller.sendMessage("#INIT");
+		//controller.sendMessage("#INIT");
 		
 		buttonSend.addActionListener(new ActionListener() {
 
@@ -161,13 +161,19 @@ public class Chat extends JFrame implements WindowListener {
 		}else if (arrayMessage[1].equals("PRIVATEMESSAGE")){
 			chatArea.append("\n" + arrayMessage[2]+ " ( private ) : "+arrayMessage[3]);
 		} else if (arrayMessage[1].equals("HISTORY")){
-			chatArea.append("\n" + arrayMessage[3]+ " ( "+arrayMessage[2]+" ) : "+arrayMessage[4]);
+			if (arrayMessage[2].equals("general")) {
+				chatArea.append("\n" + arrayMessage[3]+ " : "+arrayMessage[4]);
+			}else {
+				chatArea.append("\n" + arrayMessage[3]+ " ( "+arrayMessage[2]+" ) : "+arrayMessage[4]);
+			}
 		} else if (arrayMessage[1].equals("ENTERINGMESSAGE") || arrayMessage[1].equals("LEAVINGMESSAGE") ) {
-			chatArea.append(arrayMessage[4]);
+			chatArea.append("\n" + arrayMessage[4]);
 		} else if (arrayMessage[1].equals("ERROR")){
-			chatArea.append(arrayMessage[2]);
+			chatArea.append("\n" + arrayMessage[2]);
 		} else if (arrayMessage[1].equals("GROUPINFORMATION")){
-			addGroup(arrayMessage[2],arrayMessage[3]);
+			if (!arrayMessage[2].equals("general")) {
+				addGroup("\n" + arrayMessage[2],arrayMessage[3]);
+			}
 		} else {
 			System.out.println("Problem ...");
 		}
