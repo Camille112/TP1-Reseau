@@ -24,6 +24,8 @@ public class Controller {
 	
 	public void createChat(String username) {
 		chat = new Chat (this, username);
+		createEchoListener(username);
+		sendMessage("#INIT");
 	}
 	
 	public void sendMessage(String message) {

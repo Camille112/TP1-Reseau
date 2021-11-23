@@ -92,10 +92,7 @@ public class Chat extends JFrame implements WindowListener {
 		add(buttonSend);
 		add(buttonNewGroup);
 		addWindowListener(this);
-			
-		controller.createEchoListener(username);
-		controller.sendMessage("#INIT");
-		
+					
 		buttonSend.addActionListener(new ActionListener() {
 
 			@Override
