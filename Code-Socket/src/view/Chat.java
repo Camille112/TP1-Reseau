@@ -109,19 +109,17 @@ public class Chat extends JFrame implements WindowListener {
 				String messageModified = "";
 				if (messageParts.length>=2 && messageParts[0].equals("/wh")) { 
 					receiver = messageParts[1];
-					if (messageParts.length==2) {
-						message = "";
-					}else {
-						message = messageParts[2];
+					message = "";
+					for (int i=2; i<messageParts.length;i++) {
+						message = message+messageParts[i]+" ";
 					}
 					chatArea.append("\n" + username + " (you) to "+ receiver +" : " + message);
 					messageModified = ("#SENDMESSAGEPRIVATE#"+receiver+"#"+message);
 				}else if (messageParts.length>=2 && messageParts[0].equals("/gr")) {
 					group = messageParts[1];
-					if (messageParts.length==2) {
-						message = "";
-					}else {
-						message = messageParts[2];
+					message = "";
+					for (int i=2; i<messageParts.length;i++) {
+						message = message+messageParts[i]+" ";
 					}
 					chatArea.append("\n" + username + " (you) to "+ group +" (group) : " + message);
 					messageModified = ("#SENDMESSAGE#"+group+"#"+message);

@@ -89,8 +89,10 @@ public class ChatGroup {
 		
 		for (ClientThread ct : clientThreads) {
 			try {
-				if (members.contains(ct.getClientUsername()) && !ct.getClientUsername().equals(senderUsername))
+				if (members.contains(ct.getClientUsername()) && !ct.getClientUsername().equals(senderUsername)) {
 					ct.getSocOut().println(s);
+					ct.addGroup(this);
+				}
 			} catch (Exception e) {
 				System.err.println("Exception in ClientThread : " + e);
 			}

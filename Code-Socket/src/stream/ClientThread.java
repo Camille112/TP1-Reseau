@@ -111,6 +111,10 @@ public class ClientThread extends Thread {
 			}
 		}
 	}
+	
+	public void addGroup(ChatGroup group) {
+        myGroups.add(group);
+    }
 
 	public void closeEverything() {
 		try {
