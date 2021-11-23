@@ -54,8 +54,16 @@ public class ClientThread extends Thread {
 					closeEverything();
 					break;
 				} else {
-					System.out.println(messageFromClient);
-					broadcastToAll(messageFromClient);
+					String [] messageParts = messageFromClient.split(" ");
+					if (messageParts.length>2) {
+						String from = messageParts[0];
+						if (messageParts.length>=5&& messageParts[2].equals("/wh")) {
+							broadcastToOne(from+" (private) : "+messageParts[4],messageParts[3]);
+						}else {
+							System.out.println(messageFromClient);
+							broadcastToAll(messageFromClient);
+						}
+					}
 				}
 			} catch (Exception e) {
 				closeEverything();
@@ -77,6 +85,26 @@ public class ClientThread extends Thread {
 		}
 
 	}
+	
+	public void broadcastToOne(String messageFromClient,String username) {
+		boolean sent = false;
+		for (ClientThread ct : clientThreads) {
+			try {
+				if (ct.clientUsername.equals(username)) {
+					ct.getSocOut().println(messageFromClient);
+					sent = true;
+				}
+			} catch (Exception e) {
+				closeEverything();
+				System.err.println("Exception in ClientThread : "+e);
+			}
+		}
+		if (!sent) {
+			this.socOut.println(username+" is not connected.");
+		}
+
+	}
+
 
 	public void closeEverything() {
 		try {
