@@ -61,7 +61,6 @@ public class ChatGroup {
 					ct.getSocOut()
 							.println("#"+definition+"#" + groupName + "#" + senderUsername + "#" + messageFromClient);
 			} catch (Exception e) {
-				// closeEverything();
 				System.err.println("Exception in ClientThread : " + e);
 			}
 		}
@@ -81,7 +80,23 @@ public class ChatGroup {
 		}
 		return sent;
 	}
-
+	
+	public void sendInvite(String senderUsername) {
+		String s = "#GROUPINFORMATION#" + groupName + "#";
+		for(String username : members) {
+			s = s + username + "#";
+		}
+		
+		for (ClientThread ct : clientThreads) {
+			try {
+				if (members.contains(ct.getClientUsername()) && !ct.getClientUsername().equals(senderUsername))
+					ct.getSocOut().println(s);
+			} catch (Exception e) {
+				System.err.println("Exception in ClientThread : " + e);
+			}
+		}
+	}
+	
 	public void sendHistory(ClientThread client) throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(historyFile));
 		String msg = reader.readLine();

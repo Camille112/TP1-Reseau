@@ -70,7 +70,7 @@ public class ClientThread extends Thread {
 						for (ChatGroup cg : myGroups) {
 							String s = "#GROUPINFORMATION#" + cg.getGroupName() + "#";
 							for (String username : cg.getMembers()) {
-								s = s + username + "\n";
+								s = s + username + "#";
 							}
 							socOut.println(s);
 						}/*
@@ -94,11 +94,11 @@ public class ClientThread extends Thread {
 						}
 					} else if (msg[1] != null && msg[1].equals("CREATEGROUP")) {
 						ArrayList<String> members = new ArrayList<String>();
-						String[] membersTab = msg[3].split("\n");
-						for (String s : membersTab) {
-							members.add(s);
+						for (int i = 3 ; i<msg.length ; i++) {
+								members.add(msg[i]);
 						}
 						ChatGroup cg = new ChatGroup(msg[2], members);
+						cg.sendInvite(clientUsername);
 					}
 				}else {
 					break;
