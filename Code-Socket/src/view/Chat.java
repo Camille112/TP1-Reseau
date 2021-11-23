@@ -107,15 +107,23 @@ public class Chat extends JFrame implements WindowListener {
 				String receiver = "";
 				String group = "";
 				String messageModified = "";
-				if (messageParts.length>2 && messageParts[0].equals("/wh")) { 
+				if (messageParts.length>=2 && messageParts[0].equals("/wh")) { 
 					receiver = messageParts[1];
-					message = messageParts[2];
+					if (messageParts.length==2) {
+						message = "";
+					}else {
+						message = messageParts[2];
+					}
 					chatArea.append("\n" + username + " (you) to "+ receiver +" : " + message);
 					messageModified = ("#SENDMESSAGEPRIVATE#"+receiver+"#"+message);
-				}else if (messageParts.length>2 && messageParts[0].equals("/gr")) {
+				}else if (messageParts.length>=2 && messageParts[0].equals("/gr")) {
 					group = messageParts[1];
-					message = messageParts[2];
-					chatArea.append("\n" + username + " (you) to "+ group +"(group) : " + message);
+					if (messageParts.length==2) {
+						message = "";
+					}else {
+						message = messageParts[2];
+					}
+					chatArea.append("\n" + username + " (you) to "+ group +" (group) : " + message);
 					messageModified = ("#SENDMESSAGE#"+group+"#"+message);
 				}else {
 					chatArea.append("\n" + username + " (you) : " + message);
@@ -141,6 +149,7 @@ public class Chat extends JFrame implements WindowListener {
 		return groupForm;
 	}
 	
+	
 	public void receiveMessage(String message) {
 		String [] arrayMessage = message.split("#");
 		if (arrayMessage.length>0 && arrayMessage[1].equals("GROUPMESSAGE")) {
@@ -154,7 +163,11 @@ public class Chat extends JFrame implements WindowListener {
 		} else if (arrayMessage[1].equals("HISTORY")){
 			chatArea.append("\n" + arrayMessage[3]+ " ( "+arrayMessage[2]+" ) : "+arrayMessage[4]);
 		} else if (arrayMessage[1].equals("ENTERINGMESSAGE") || arrayMessage[1].equals("LEAVINGMESSAGE") ) {
+			chatArea.append(arrayMessage[4]);
+		} else if (arrayMessage[1].equals("ERROR")){
 			chatArea.append(arrayMessage[2]);
+		} else if (arrayMessage[1].equals("GROUPINFORMATION")){
+			addGroup(arrayMessage[2],arrayMessage[3]);
 		} else {
 			System.out.println("Problem ...");
 		}
