@@ -79,7 +79,9 @@ public class ClientThread extends Thread {
 						}*/
 					} else if (msg[1] != null && msg[1].equals("SENDMESSAGE")) {
 						boolean groupFound = false;
+						System.out.println("GROUPSEARCHED"+msg[2]);
 						for (ChatGroup cg : myGroups) {
+							System.out.println("GroupName"+cg.getGroupName());
 							if (cg.getGroupName().equals(msg[2])) {
 								cg.broadcastToMembers(msg[3], clientUsername, "GROUPMESSAGE");
 								groupFound = true;
@@ -99,6 +101,7 @@ public class ClientThread extends Thread {
 						}
 						ChatGroup cg = new ChatGroup(msg[2], members);
 						cg.sendInvite(clientUsername);
+						myGroups.add(cg);
 					}
 				}else {
 					break;

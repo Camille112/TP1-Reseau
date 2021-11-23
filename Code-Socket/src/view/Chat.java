@@ -172,7 +172,11 @@ public class Chat extends JFrame implements WindowListener {
 			chatArea.append("\n" + arrayMessage[2]);
 		} else if (arrayMessage[1].equals("GROUPINFORMATION")){
 			if (!arrayMessage[2].equals("general")) {
-				addGroup("\n" + arrayMessage[2],arrayMessage[3]);
+				String members = "";
+				for (int i=3; i<arrayMessage.length; i++) {
+					members+=arrayMessage[i]+"\n";
+				}
+				addGroup("\n" + arrayMessage[2],members);
 			}
 		} else {
 			System.out.println("Problem ...");

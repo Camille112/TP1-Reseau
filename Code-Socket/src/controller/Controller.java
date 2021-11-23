@@ -43,7 +43,13 @@ public class Controller {
 	public void addGroup(String newGroupName, String newGroupMembers,String username) {
 		chat.getGroupForm().getPage().dispose();
 		chat.addGroup(newGroupName, newGroupMembers+"\n"+username);
-		ec.sendMessage("#CREATEGROUP#"+newGroupName+"#"+newGroupMembers+"\n"+username);		
+		String[] arrayMembers = newGroupMembers.split("\n");
+		String members = "";
+		for (int i=0; i<arrayMembers.length; i++) {
+			members+=arrayMembers[i]+"#";
+		}
+		System.out.println(members);
+		ec.sendMessage("#CREATEGROUP#"+newGroupName+"#"+members+username);		
 	}
 
 }
