@@ -19,10 +19,8 @@ public class ChatGroup {
 		this.groupName = groupName;
 
 		this.members = usernames;
-		/*
 		historyFile = new File("../doc/" + groupName + "GroupChatHistory.txt");
 		historyFile.createNewFile();
-		 */
 		allGroups.add(this);
 	}
 
@@ -52,7 +50,7 @@ public class ChatGroup {
 	
 	public void broadcastToMembers(String messageFromClient, String senderUsername, String definition) {
 		if(definition.equals("GROUPMESSAGE")) {
-			//save("#" + senderUsername + "#" + messageFromClient);
+			save("#" + senderUsername + "#" + messageFromClient);
 		}
 		
 		for (ClientThread ct : clientThreads) {

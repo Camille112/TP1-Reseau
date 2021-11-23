@@ -7,7 +7,7 @@ import view.LandingPage;
 public class Controller {
 	LandingPage landingPage;
 	EchoClient ec;
-	Chat chat;
+	Chat chat = null;
 	
 	public Controller () {
 		landingPage = new LandingPage(this);

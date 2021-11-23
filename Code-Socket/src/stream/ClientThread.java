@@ -74,10 +74,10 @@ public class ClientThread extends Thread {
 								s = s + username + "#";
 							}
 							socOut.println(s);
-						}/*
+						}
 						for (ChatGroup cg : myGroups) {
 							cg.sendHistory(this);
-						}*/
+						}
 					} else if (msg[1] != null && msg[1].equals("SENDMESSAGE")) {
 						boolean groupFound = false;
 						System.out.println("GROUPSEARCHED"+msg[2]);
