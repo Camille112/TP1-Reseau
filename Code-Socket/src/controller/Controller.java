@@ -31,11 +31,19 @@ public class Controller {
 	}
 	
 	public void receiveMessage(String message) {
+		System.out.println("before chat");
 		chat.receiveMessage(message);
+		System.out.println("after chat");
 	}
 	
 	public void leaveChat() {
-		ec.sendMessage("STOP");
+		ec.sendMessage("#DISCONNECT");
+	}
+	
+	public void addGroup(String newGroupName, String newGroupMembers,String username) {
+		chat.getGroupForm().getPage().dispose();
+		chat.addGroup(newGroupName, newGroupMembers+"\n"+username);
+		ec.sendMessage("#CREATEGROUP#"+newGroupName+"#"+newGroupMembers+"\n"+username);		
 	}
 
 }

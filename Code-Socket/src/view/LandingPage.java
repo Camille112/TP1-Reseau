@@ -17,14 +17,16 @@ import controller.Controller;
 public class LandingPage {
 
 	private Controller controller;
-	private JFrame page = new JFrame();
-	private JLabel labelUsername = new JLabel("Enter your username :");
-	private JTextArea messageArea = new JTextArea();
-	private JButton buttonOk = new JButton("OK");
-	private String username = "";
+	JFrame page = new JFrame();
+	String username = "";
 	
 	public LandingPage(Controller controller) {
 		this.controller = controller;
+		
+		JLabel labelUsername = new JLabel("Enter your username :");
+		JTextArea messageArea = new JTextArea();
+		JButton buttonOk = new JButton("OK");
+		
 		Dimension dim = new Dimension(100, 200);
 		page.setSize(dim);
 		page.setPreferredSize(dim);
