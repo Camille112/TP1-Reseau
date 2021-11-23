@@ -1,10 +1,3 @@
-/***
- * ClientThread
- * Example of a TCP server
- * Date: 14/12/08
- * Authors:
- */
-
 package stream;
 
 import java.io.*;
@@ -13,6 +6,7 @@ import java.util.ArrayList;
 
 public class ClientThread extends Thread {
 	public static ArrayList<ClientThread> clientThreads = new ArrayList<ClientThread>();
+	public static ArrayList<String> messageHistory = new ArrayList<String>();
 	private Socket clientSocket;
 	private BufferedReader socIn;
 	private PrintStream socOut;
@@ -33,8 +27,12 @@ public class ClientThread extends Thread {
 			this.socOut = new PrintStream(clientSocket.getOutputStream());
 			this.clientUsername = socIn.readLine();
 			clientThreads.add(this);
-
 			broadcastToAll(clientUsername + " has entered the chat.");
+			
+			for(String msg : messageHistory) {
+				socOut.println(msg);
+			}
+			
 		} catch (IOException e) {
 			closeEverything();
 		}
@@ -54,7 +52,10 @@ public class ClientThread extends Thread {
 					clientThreads.remove(this);
 					closeEverything();
 					break;
+				} else if(messageFromClient.contains("SAVE")) {
+					save();
 				} else {
+					messageHistory.add(messageFromClient);
 					System.out.println(messageFromClient);
 					broadcastToAll(messageFromClient);
 				}
@@ -77,9 +78,37 @@ public class ClientThread extends Thread {
 		}
 
 	}
+	
+	public void save() {
+		
+		try {
+			File fileHistory = new File("../doc/messageHistory.txt");
+			fileHistory.createNewFile();
+			BufferedWriter writer = new BufferedWriter(new FileWriter(fileHistory, true));
+		    for(String msg : messageHistory) {
+		    	writer.append(msg + "\n");
+			}
+		    writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 
 	public void closeEverything() {
 		try {
+			File fileHistory = new File("./doc/messageHistory.txt");
+			fileHistory.createNewFile();
+			BufferedWriter writer = new BufferedWriter(new FileWriter(fileHistory, true));
+		    for(String msg : messageHistory) {
+		    	writer.append(msg + "\n");
+			}
+		    writer.close();
+			
+			
+			
+			
 			socIn.close();
 			socOut.close();
 			clientSocket.close();
