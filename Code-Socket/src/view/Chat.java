@@ -94,7 +94,7 @@ public class Chat extends JFrame implements WindowListener {
 		addWindowListener(this);
 			
 		controller.createEchoListener(username);
-		//controller.sendMessage("#INIT");
+		controller.sendMessage("#INIT");
 		
 		buttonSend.addActionListener(new ActionListener() {
 
@@ -149,6 +149,7 @@ public class Chat extends JFrame implements WindowListener {
 	
 	
 	public void receiveMessage(String message) {
+		System.out.println("TESTTTTT");
 		String [] arrayMessage = message.split("#");
 		if (arrayMessage.length>0 && arrayMessage[1].equals("GROUPMESSAGE")) {
 			if (arrayMessage[2].equals("general")) {
@@ -169,11 +170,13 @@ public class Chat extends JFrame implements WindowListener {
 		} else if (arrayMessage[1].equals("ERROR")){
 			chatArea.append("\n" + arrayMessage[2]);
 		} else if (arrayMessage[1].equals("GROUPINFORMATION")){
+			System.out.println("HEERE");
 			if (!arrayMessage[2].equals("general")) {
 				String members = "";
 				for (int i=3; i<arrayMessage.length; i++) {
 					members+=arrayMessage[i]+"\n";
 				}
+				System.out.println("MEMBERS"+members);
 				addGroup("\n" + arrayMessage[2],members);
 			}
 		} else {

@@ -68,6 +68,7 @@ public class ClientThread extends Thread {
 						break;
 					} else if (msg[1] != null && msg[1].equals("INIT")) {
 						for (ChatGroup cg : myGroups) {
+							System.out.println("GROUP ICI"+cg.getGroupName());
 							String s = "#GROUPINFORMATION#" + cg.getGroupName() + "#";
 							for (String username : cg.getMembers()) {
 								s = s + username + "#";

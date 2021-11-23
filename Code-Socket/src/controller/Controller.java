@@ -31,7 +31,7 @@ public class Controller {
 	}
 	
 	public void receiveMessage(String message) {
-		System.out.println("before chat");
+		System.out.println("before chat"+message);
 		chat.receiveMessage(message);
 		System.out.println("after chat");
 	}
