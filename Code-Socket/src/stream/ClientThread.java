@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class ClientThread extends Thread {
 	public static ArrayList<ClientThread> clientThreads = new ArrayList<ClientThread>();
-	public static ArrayList<String> messageHistory = new ArrayList<String>();
 	private Socket clientSocket;
 	private BufferedReader socIn;
 	private PrintStream socOut;
@@ -28,11 +27,17 @@ public class ClientThread extends Thread {
 			this.clientUsername = socIn.readLine();
 			clientThreads.add(this);
 			broadcastToAll(clientUsername + " has entered the chat.");
-			
-			for(String msg : messageHistory) {
+
+			File fileHistory = new File("../doc/messageHistory.txt");
+			fileHistory.createNewFile();
+			BufferedReader reader = new BufferedReader(new FileReader(fileHistory));
+			String msg = reader.readLine();
+			while(msg != null) {
 				socOut.println(msg);
+				msg = reader.readLine();
 			}
-			
+			reader.close();
+
 		} catch (IOException e) {
 			closeEverything();
 		}
@@ -52,10 +57,8 @@ public class ClientThread extends Thread {
 					clientThreads.remove(this);
 					closeEverything();
 					break;
-				} else if(messageFromClient.contains("SAVE")) {
-					save();
 				} else {
-					messageHistory.add(messageFromClient);
+					save(messageFromClient);
 					System.out.println(messageFromClient);
 					broadcastToAll(messageFromClient);
 				}
@@ -78,37 +81,24 @@ public class ClientThread extends Thread {
 		}
 
 	}
-	
-	public void save() {
-		
+
+	public void save(String msg) {
+
 		try {
 			File fileHistory = new File("../doc/messageHistory.txt");
 			fileHistory.createNewFile();
 			BufferedWriter writer = new BufferedWriter(new FileWriter(fileHistory, true));
-		    for(String msg : messageHistory) {
-		    	writer.append(msg + "\n");
-			}
-		    writer.close();
+			writer.append(msg + "\n");
+			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void closeEverything() {
 		try {
-			File fileHistory = new File("./doc/messageHistory.txt");
-			fileHistory.createNewFile();
-			BufferedWriter writer = new BufferedWriter(new FileWriter(fileHistory, true));
-		    for(String msg : messageHistory) {
-		    	writer.append(msg + "\n");
-			}
-		    writer.close();
-			
-			
-			
-			
 			socIn.close();
 			socOut.close();
 			clientSocket.close();
