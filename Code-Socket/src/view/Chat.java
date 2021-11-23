@@ -26,8 +26,6 @@ public class Chat extends JFrame implements WindowListener {
 
 	public Chat(Controller controller, String username) {
 		this.controller = controller;
-		controller.createEchoListener(username);
-
 		Dimension dim = new Dimension(750, 600);
 		setSize(dim);
 		setPreferredSize(dim);
@@ -73,7 +71,9 @@ public class Chat extends JFrame implements WindowListener {
 		add(messageArea);
 		add(buttonSend);
 		addWindowListener(this);
-
+		
+		controller.createEchoListener(username);
+		
 		buttonSend.addActionListener(new ActionListener() {
 
 			@Override

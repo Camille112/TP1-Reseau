@@ -31,8 +31,11 @@ public class ClientThreadListener extends Thread {
 		String messageReceived = "";
 		while (socket.isConnected()) {
 			try {
+				System.out.println("try");
 				messageReceived = socIn.readLine();
+				System.out.println("msgReceived"+messageReceived);
 				controller.receiveMessage(messageReceived);
+				System.out.println("receiveMessageSent");
 			} catch (Exception e) {
 				closeEverything();
 				System.err.println("Error in ClientThreadListener :" + e);

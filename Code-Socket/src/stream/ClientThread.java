@@ -34,6 +34,16 @@ public class ClientThread extends Thread {
 			this.clientUsername = socIn.readLine();
 			clientThreads.add(this);
 			broadcastToAll(clientUsername + " has entered the chat.");
+			
+			File fileHistory = new File("../doc/messageHistory.txt");
+            fileHistory.createNewFile();
+            BufferedReader reader = new BufferedReader(new FileReader(fileHistory));
+            String msg = reader.readLine();
+            while(msg != null) {
+                this.socOut.println(msg);
+                msg = reader.readLine();
+            }
+            reader.close();
 		} catch (IOException e) {
 			closeEverything();
 		}
@@ -60,6 +70,7 @@ public class ClientThread extends Thread {
 						if (messageParts.length>=5&& messageParts[2].equals("/wh")) {
 							broadcastToOne(from+" (private) : "+messageParts[4],messageParts[3]);
 						}else {
+							save(messageFromClient);
 							System.out.println(messageFromClient);
 							broadcastToAll(messageFromClient);
 						}
@@ -104,6 +115,21 @@ public class ClientThread extends Thread {
 		}
 
 	}
+	
+	public void save(String msg) {
+
+        try {
+            File fileHistory = new File("../doc/messageHistory.txt");
+            fileHistory.createNewFile();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileHistory, true));
+            writer.append(msg + "\n");
+            writer.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
 
 
 	public void closeEverything() {
