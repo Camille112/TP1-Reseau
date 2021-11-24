@@ -13,13 +13,36 @@ import javax.swing.border.Border;
 
 import controller.Controller;
 
+/**
+ * LandingPage contains a form to add a group.
+ * 
+ * A groupForm is composed by :
+ * <ul>
+ * <li>A Controller to communicate with the EchoClient.</li>
+ * <li>A JFrame page that contains the components.</li>
+ * <li>A String that is the username of the user.</li>
+ * </ul>
+ * 
+ * 
+ * @author Camille Migozzi & Karina Du
+ * 
+ * @see controller.Controller
+ */
 
 public class LandingPage {
 
 	private Controller controller;
 	JFrame page = new JFrame();
 	String username = "";
-	
+
+	/**
+	 * Class constructor.
+	 * Create the landingPage with all its components.
+	 * 
+	 * @param controller Controller that communicates between GUI and back end.
+	 * 
+	 * @see controller.Controller
+	 */
 	public LandingPage(Controller controller) {
 		this.controller = controller;
 		
@@ -68,6 +91,13 @@ public class LandingPage {
 		page.add(messageArea);
 		page.add(buttonOk);
 	}
+	
+	/**
+	 * Attribute page getter.
+	 * 
+	 * @return JFrame page.
+	 *
+	 */
 	
 	public JFrame getPage() {
 		return page;
