@@ -19,7 +19,7 @@ import java.util.Scanner;
  * <li>A UDP_ClientThreadListener</li>
  * </ul>
  * 
- * @author Camille MIGOZZI & Karina DU
+ * @author Camille MIGOZZI and Karina DU
  */
 public class UDP_Client {
 	Scanner sc = null;
@@ -31,6 +31,9 @@ public class UDP_Client {
 	/**
 	 * Class constructor.
 	 * Initializes : MulticastSocket, username and Scanner
+	 * 
+	 * @param username of the client.
+	 * @param sc a scanner to get the messages.
 	 */
 	public UDP_Client(String username, Scanner sc) {
 		try {
@@ -44,6 +47,8 @@ public class UDP_Client {
 
 	/**
 	 * This method sends a message in the form of a DatagramPacket through the MulticastSocket, so that other Clients receive it
+	 * 
+	 * @throws IOException 
 	 */
 	public void sendMessage() throws IOException {
 		sc = new Scanner(System.in);
@@ -63,6 +68,9 @@ public class UDP_Client {
 	
 	/**
 	 * This method initialize a UDP_ClientThreadListener to listen to incoming messages that other Clients might send
+	 * 
+	 * @throws IOException 
+	 * @throws UnknownHostException 
 	 */
 	public void messageListener() throws UnknownHostException, IOException {
 		ctl = new UDP_ClientThreadListener(addressGroup, username);
@@ -71,6 +79,7 @@ public class UDP_Client {
 	
 	/**
 	 * This method closes the Scanner and the MulticastSocket
+	 * 
 	 */
 	public void closeEverything() {
 		sc.close();
@@ -80,6 +89,9 @@ public class UDP_Client {
 	/**
 	 * Main method
 	 * Initializes a new UDP_Client
+	 * 
+	 * @param args Command line parameters are not used.
+	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
 		Scanner sc = new Scanner(System.in);

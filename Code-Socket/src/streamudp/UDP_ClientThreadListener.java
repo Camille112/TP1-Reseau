@@ -28,6 +28,12 @@ public class UDP_ClientThreadListener extends Thread{
 	/**
 	 * Class constructor.
 	 * Initializes : MulticastSocket, addressGroup and username
+	 * 
+	 * @param username of the user
+	 * @param adressGroup 
+	 * 
+	 * @throws IOException 
+	 * @throws UnknownHostException 
 	 */
 	@SuppressWarnings("deprecation")
 	public UDP_ClientThreadListener(String addressGroup, String username) throws UnknownHostException, IOException {
