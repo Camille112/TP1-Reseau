@@ -18,7 +18,7 @@ import java.net.UnknownHostException;
  * 
  * UDP_ClientThreadListener inherits Thread
  * 
- * @author Camille MIGOZZI & Karina DU
+ * @author Camille MIGOZZI and Karina DU
  */
 public class UDP_ClientThreadListener extends Thread{
 	MulticastSocket ms = null;
@@ -30,7 +30,7 @@ public class UDP_ClientThreadListener extends Thread{
 	 * Initializes : MulticastSocket, addressGroup and username
 	 * 
 	 * @param username of the user
-	 * @param adressGroup 
+	 * @param addressGroup 
 	 * 
 	 * @throws IOException 
 	 * @throws UnknownHostException 

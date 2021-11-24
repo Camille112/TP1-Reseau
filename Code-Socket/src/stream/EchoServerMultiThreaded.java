@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * <li>A Socket : socket where the client will contact the server</li>
  * </ul>
  * 
- * @author Camille MIGOZZI & Karina DU
+ * @author Camille MIGOZZI and Karina DU
  */
 public class EchoServerMultiThreaded {
 	public static void main(String args[]) {

@@ -18,7 +18,7 @@ import controller.Controller;
  * </ul>
  * 
  * 
- * @author Camille MIGOZZI & Karina DU
+ * @author Camille MIGOZZI and Karina DU
  */
 public class ClientThreadListener extends Thread {
 	private Socket socket;

@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * 
  * ClientThread inherits Thread
  * 
- * @author Camille MIGOZZI & Karina DU
+ * @author Camille MIGOZZI and Karina DU
  */
 public class ClientThread extends Thread {
 	private Socket clientSocket;

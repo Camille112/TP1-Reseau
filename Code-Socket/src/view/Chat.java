@@ -33,7 +33,7 @@ import java.awt.event.WindowListener;
  * 
  * Ressources : // https://www.sourcecodester.com/tutorials/java/9097/chat-system-chat-gui.html
  * 
- * @author Camille Migozzi & Karina Du
+ * @author Camille Migozzi and Karina Du
  * 
  * @see controller.Controller
  * @see view.GroupForm

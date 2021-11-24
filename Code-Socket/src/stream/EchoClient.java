@@ -20,7 +20,7 @@ import controller.Controller;
  * </ul>
  * 
  * 
- * @author Camille MIGOZZI & Karina DU
+ * @author Camille MIGOZZI and Karina DU
  */
 
 public class EchoClient {

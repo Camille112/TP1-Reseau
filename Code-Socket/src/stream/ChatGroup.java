@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 /**
@@ -20,7 +21,7 @@ import java.util.ArrayList;
  * <li>A String : the group name</li>
  * </ul>
  * 
- * @author Camille MIGOZZI & Karina DU
+ * @author Camille MIGOZZI and Karina DU
  */
 public class ChatGroup {
 	public static ArrayList<ClientThread> clientThreads = new ArrayList<ClientThread>();
@@ -32,6 +33,10 @@ public class ChatGroup {
 	/**
 	 * Class constructor.
 	 * Initializes : groupName, members, historyFile
+	 * 
+	 * @param groupName 
+	 * @param usernames of the members of the group
+	 * @throws IOException 
 	 */
 	public ChatGroup(String groupName, ArrayList<String> usernames) throws IOException {
 		this.groupName = groupName;
@@ -44,7 +49,7 @@ public class ChatGroup {
 
 	/**
 	 * Attribute allGroups getter.
-	 * @return ArrayList<ChatGroup>.
+	 * @return allGroups an ArrayList.
 	 */
 	public ArrayList<ChatGroup> getAllGroups() {
 		return allGroups;
@@ -52,7 +57,7 @@ public class ChatGroup {
 
 	/**
 	 * Attribute members getter.
-	 * @return ArrayList<String>.
+	 * @return members an ArrayList.
 	 */
 	public ArrayList<String> getMembers() {
 		return members;
@@ -159,6 +164,8 @@ public class ChatGroup {
 	/**
 	 * This method sends to a newly connected client all the previous messages of the chat
 	 * @param client The new ClientThread
+	 * 
+	 *  @throws IOException 
 	 */
 	public void sendHistory(ClientThread client) throws IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(historyFile));

@@ -24,7 +24,7 @@ import controller.Controller;
  * </ul>
  * 
  * 
- * @author Camille Migozzi & Karina Du
+ * @author Camille Migozzi and Karina Du
  * 
  * @see controller.Controller
  */

@@ -13,7 +13,7 @@ import view.LandingPage;
  * <li>An EchoClient which will communicate with the server and exchange messages.</li>
  * </ul>
  * 
- * @author Camille Migozzi & Karina Du
+ * @author Camille Migozzi and Karina Du
  * 
  * @see stream.EchoClient
  * @see view.LandingPage
