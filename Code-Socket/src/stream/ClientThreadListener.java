@@ -18,7 +18,7 @@ public class ClientThreadListener extends Thread {
 			this.socIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		} catch (IOException e) {
 			closeEverything();
-			System.err.println("Error in ClientThreadListener :" + e);
+			//System.err.println("Error in ClientThreadListener :" + e);
 		}
 	}
 
@@ -31,20 +31,17 @@ public class ClientThreadListener extends Thread {
 		String messageReceived = "";
 		while (socket.isConnected()) {
 			try {
-				System.out.println("try");
 				messageReceived = socIn.readLine();
-				System.out.println("msgReceived"+messageReceived);
+				//System.out.println("msgReceived : "+messageReceived);
 				if (messageReceived != null && !messageReceived.isBlank()) {
 					controller.receiveMessage(messageReceived);
 				}
-				System.out.println("receiveMessageSent");
 			} catch (Exception e) {
 				closeEverything();
-				System.err.println("Error in ClientThreadListener :" + e);
+				//System.err.println("Error in ClientThreadListener :" + e);
 				break;
 			}
 		}
-
 	}
 	
 	public void closeEverything() {

@@ -33,9 +33,7 @@ public class Controller {
 	}
 	
 	public void receiveMessage(String message) {
-		System.out.println("before chat"+message);
 		chat.receiveMessage(message);
-		System.out.println("after chat");
 	}
 	
 	public void leaveChat() {
@@ -50,8 +48,11 @@ public class Controller {
 		for (int i=0; i<arrayMembers.length; i++) {
 			members+=arrayMembers[i]+"#";
 		}
-		System.out.println(members);
 		ec.sendMessage("#CREATEGROUP#"+newGroupName+"#"+members+username);		
+	}
+	
+	public void changeUsername(String newUsername) {
+		ec.changeUsername(newUsername);
 	}
 
 }

@@ -26,6 +26,16 @@ public class ClientThread extends Thread {
 			this.socIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			this.socOut = new PrintStream(clientSocket.getOutputStream());
 			this.clientUsername = socIn.readLine();
+			
+//			boolean originalUsername = true;
+//			while(!general.isNewUser(clientUsername)) {
+//				clientUsername = clientUsername + "1";
+//				originalUsername = false;
+//			}
+//			
+//			if(!originalUsername) {
+//				socOut.println("#NEWUSERNAME#" + clientUsername);
+//			}
 
 			myGroups.add(general);
 			for (ChatGroup cg : general.getAllGroups()) {
@@ -57,7 +67,7 @@ public class ClientThread extends Thread {
 		while (clientSocket.isConnected()) {
 			try {
 				String messageFromClient = socIn.readLine();
-				System.out.println("---" + messageFromClient);
+				System.out.println("received : " + messageFromClient);
 				if (messageFromClient != null) {
 					String[] msg = messageFromClient.split("#");
 					if (msg[1] != null && msg[1].equals("DISCONNECT")) {
@@ -68,7 +78,6 @@ public class ClientThread extends Thread {
 						break;
 					} else if (msg[1] != null && msg[1].equals("INIT")) {
 						for (ChatGroup cg : myGroups) {
-							System.out.println("GROUP ICI"+cg.getGroupName());
 							String s = "#GROUPINFORMATION#" + cg.getGroupName() + "#";
 							for (String username : cg.getMembers()) {
 								s = s + username + "#";
@@ -80,9 +89,7 @@ public class ClientThread extends Thread {
 						}
 					} else if (msg[1] != null && msg[1].equals("SENDMESSAGE")) {
 						boolean groupFound = false;
-						System.out.println("GROUPSEARCHED"+msg[2]);
 						for (ChatGroup cg : myGroups) {
-							System.out.println("GroupName"+cg.getGroupName());
 							if (cg.getGroupName().equals(msg[2])) {
 								cg.broadcastToMembers(msg[3], clientUsername, "GROUPMESSAGE");
 								groupFound = true;

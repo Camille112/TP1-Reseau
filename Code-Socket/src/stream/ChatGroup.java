@@ -48,6 +48,17 @@ public class ChatGroup {
 		clientThreads.remove(ct);
 	}
 	
+	public boolean isNewUser(String username) {
+		boolean found = false;
+		for(ClientThread ct : clientThreads) {
+			if(ct.getClientUsername().equals(username)) {
+				found = true;
+			}
+		}
+		return found;
+	}
+	
+	
 	public void broadcastToMembers(String messageFromClient, String senderUsername, String definition) {
 		if(definition.equals("GROUPMESSAGE")) {
 			save("#" + senderUsername + "#" + messageFromClient);
@@ -59,7 +70,7 @@ public class ChatGroup {
 					ct.getSocOut()
 							.println("#"+definition+"#" + groupName + "#" + senderUsername + "#" + messageFromClient);
 			} catch (Exception e) {
-				System.err.println("Exception in ClientThread : " + e);
+				//System.err.println("Exception in ClientThread : " + e);
 			}
 		}
 	}
@@ -73,7 +84,7 @@ public class ChatGroup {
 					sent = true;
 				}
 			} catch (Exception e) {
-				System.err.println("Exception in ClientThread : " + e);
+				//System.err.println("Exception in ClientThread : " + e);
 			}
 		}
 		return sent;
@@ -92,7 +103,7 @@ public class ChatGroup {
 					ct.addGroup(this);
 				}
 			} catch (Exception e) {
-				System.err.println("Exception in ClientThread : " + e);
+				//System.err.println("Exception in ClientThread : " + e);
 			}
 		}
 	}

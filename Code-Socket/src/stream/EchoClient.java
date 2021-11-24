@@ -31,7 +31,7 @@ public class EchoClient {
 			socOut.println(username);
 		} catch (Exception e) {
 			closeEverything();
-			System.err.println("Error in EchoClient :" + e);
+			//System.err.println("Error in EchoClient :" + e);
 		}
 	}
 	
@@ -45,6 +45,10 @@ public class EchoClient {
 	public void messageListener() {
 		ctl = new ClientThreadListener(controller, echoSocket);
 		ctl.start();
+	}
+	
+	public void changeUsername(String newUsername) {
+		this.username=newUsername;
 	}
 	
 	public void closeEverything() {

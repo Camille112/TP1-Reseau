@@ -1,4 +1,4 @@
-package stream;
+package streamudp;
 
 import java.io.IOException;
 import java.net.DatagramPacket;

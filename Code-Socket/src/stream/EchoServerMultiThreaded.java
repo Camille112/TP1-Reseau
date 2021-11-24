@@ -12,14 +12,6 @@ import java.net.*;
 import java.util.ArrayList;
 
 public class EchoServerMultiThreaded {
-
-	/**
-	 * main method
-	 * 
-	 * @param EchoServer port
-	 * 
-	 **/
-
 	public static void main(String args[]) {
 		ServerSocket connectionSocket;
 		Socket clientSocket = null;
@@ -44,7 +36,7 @@ public class EchoServerMultiThreaded {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			System.err.println("Error in EchoServer:" + e);
+			//System.err.println("Error in EchoServer:" + e);
 		}
 	}
 }
