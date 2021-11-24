@@ -27,7 +27,7 @@ public class LandingPage {
 		JTextArea messageArea = new JTextArea();
 		JButton buttonOk = new JButton("OK");
 		
-		Dimension dim = new Dimension(100, 200);
+		Dimension dim = new Dimension(200, 200);
 		page.setSize(dim);
 		page.setPreferredSize(dim);
 		page.setMinimumSize(dim);
@@ -44,12 +44,12 @@ public class LandingPage {
 		buttonOk.setLayout(null);
  
 		labelUsername.setSize(200, 40);
-		labelUsername.setLocation(10, 10);
+		labelUsername.setLocation(30, 10);
 		messageArea.setEditable(true);
 		messageArea.setSize(100, 40);
-		messageArea.setLocation(25, 50);
+		messageArea.setLocation(40, 50);
 		buttonOk.setSize(100, 50);
-		buttonOk.setLocation(25, 100);
+		buttonOk.setLocation(40, 100);
 		buttonOk.addActionListener(new ActionListener() {
 
 			@Override
