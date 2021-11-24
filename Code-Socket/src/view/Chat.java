@@ -18,16 +18,44 @@ import controller.Controller;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-public class Chat extends JFrame implements WindowListener {
+/**
+ * Chat extends JFrame. It's a window that displays the interface of the chat.
+ * It implements WindowListener in order to know when the user quit the window.
+ * 
+ * A chat is composed of :
+ * <ul>
+ * <li>A JTextArea chatArea where all the messages sent and received are displayed.</li>
+ * <li>A JTextArea groupsArea where you can see all the groups you are in.</li>
+ * <li>A Controller to communicate with the EchoClient.</li>
+ * <li>A GroupForm that opens when you want to add a group.</li>
+ * <li>A String that is the username of the user.</li>
+ * </ul>
+ * 
+ * Ressources : // https://www.sourcecodester.com/tutorials/java/9097/chat-system-chat-gui.html
+ * 
+ * @author Camille Migozzi & Karina Du
+ * 
+ * @see controller.Controller
+ * @see view.GroupForm
+ */
 
-	// https://www.sourcecodester.com/tutorials/java/9097/chat-system-chat-gui.html
+public class Chat extends JFrame implements WindowListener {
 	
 	private JTextArea chatArea = new JTextArea("Welcome to the chat room!\n");
 	private JTextArea groupsArea = new JTextArea("");
 	private Controller controller;
 	private GroupForm groupForm;
 	private String username;
-
+	
+	/**
+	 * Class constructor.
+	 * Create the chat with all its components.
+	 * 
+	 * @param controller Controller that communicates between GUI and back end.
+	 * @param username The username of the user.
+	 * 
+	 * @see controller.Controller
+	 */
 	public Chat(Controller controller, String username) {
 		this.username = username;
 		this.controller = controller;
@@ -141,12 +169,24 @@ public class Chat extends JFrame implements WindowListener {
 		});
 
 	}
+	
+	/**
+	 * Attribute groupForm getter.
+	 * 
+	 * @return GroupForm.
+	 *
+	 */
 
 	public GroupForm getGroupForm() {
 		return groupForm;
 	}
 	
-	
+	/**
+	 * When the server sent a message the chat displays it in the chatArea in a special format depending on the type of the message.
+	 * 
+	 * @param message The message received from someone else or the server.
+	 *
+	 */
 	public void receiveMessage(String message) {
 		String [] arrayMessage = message.split("#");
 		if (arrayMessage.length>0 && arrayMessage[1].equals("GROUPMESSAGE")) {
@@ -185,6 +225,14 @@ public class Chat extends JFrame implements WindowListener {
 		chatArea.setCaretPosition(chatArea.getText().length());
 
 	}
+	
+	/**
+	 * Display the new group added.
+	 * 
+	 * @param newGroupName name of the new group.
+	 * @param newGroupMembers name of all the members.
+	 *
+	 */
 
 	public void addGroup(String newGroupName, String newGroupMembers) {
 		groupsArea.append("\n\n" + newGroupName+" : ");

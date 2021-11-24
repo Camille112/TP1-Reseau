@@ -13,6 +13,25 @@ import javax.swing.border.Border;
 
 import controller.Controller;
 
+/**
+ * GroupForm contains a form to add a group.
+ * 
+ * A groupForm is composed by :
+ * <ul>
+ * <li>A Controller to communicate with the EchoClient.</li>
+ * <li>A JFrame page that contains the components.</li>
+ * <li>A JTextArea groupName that defines the name of the group you want to add.</li>
+ * <li>A String newGroupName associated.</li>
+ * <li>A JTextArea membersName that contains of all the members of the group you want to add.</li>
+ * <li>A String newGroupMembers associated.</li>
+ * <li>A String that is the username of the user.</li>
+ * </ul>
+ * 
+ * 
+ * @author Camille Migozzi & Karina Du
+ * 
+ * @see controller.Controller
+ */
 
 public class GroupForm {
 
@@ -24,6 +43,15 @@ public class GroupForm {
 	private String newGroupMembers = "";
 	private String username = "";
 	
+	/**
+	 * Class constructor.
+	 * Create the groupForm with all its components.
+	 * 
+	 * @param controller Controller that communicates between GUI and back end.
+	 * @param username The username of the user.
+	 * 
+	 * @see controller.Controller
+	 */
 	public GroupForm(Controller controller, String username) {
 		this.controller = controller;
 		this.username = username;
@@ -88,6 +116,13 @@ public class GroupForm {
 		page.add(membersName);
 		page.add(buttonOk);
 	}
+	
+	/**
+	 * Attribute page getter.
+	 * 
+	 * @return JFrame page.
+	 *
+	 */
 	
 	public JFrame getPage() {
 		return page;
