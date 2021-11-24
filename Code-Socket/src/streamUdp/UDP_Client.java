@@ -7,6 +7,20 @@ import java.net.MulticastSocket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+/**
+ * UDP_Client is the class that defines a Client connected to others with UDP
+ * 
+ * A UDP_Client is composed of:
+ * <ul>
+ * <li>A Scanner</li>
+ * <li>A String username</li>
+ * <li>A MulticastSocket</li>
+ * <li>A String addressGroup</li>
+ * <li>A UDP_ClientThreadListener</li>
+ * </ul>
+ * 
+ * @author Camille MIGOZZI & Karina DU
+ */
 public class UDP_Client {
 	Scanner sc = null;
 	String username = "";
@@ -14,6 +28,10 @@ public class UDP_Client {
 	String addressGroup = "224.0.0.0";
 	UDP_ClientThreadListener ctl;
 	
+	/**
+	 * Class constructor.
+	 * Initializes : MulticastSocket, username and Scanner
+	 */
 	public UDP_Client(String username, Scanner sc) {
 		try {
 			this.sc = sc;
@@ -24,6 +42,9 @@ public class UDP_Client {
 		}
 	}
 
+	/**
+	 * This method sends a message in the form of a DatagramPacket through the MulticastSocket, so that other Clients receive it
+	 */
 	public void sendMessage() throws IOException {
 		sc = new Scanner(System.in);
 		while(true) {
@@ -40,16 +61,26 @@ public class UDP_Client {
 		sc.close();
 	}
 	
+	/**
+	 * This method initialize a UDP_ClientThreadListener to listen to incoming messages that other Clients might send
+	 */
 	public void messageListener() throws UnknownHostException, IOException {
 		ctl = new UDP_ClientThreadListener(addressGroup, username);
 		ctl.start();
 	}
 	
+	/**
+	 * This method closes the Scanner and the MulticastSocket
+	 */
 	public void closeEverything() {
 		sc.close();
 		ms.close();
 	}
 	
+	/**
+	 * Main method
+	 * Initializes a new UDP_Client
+	 */
 	public static void main(String[] args) throws IOException {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter your username :");

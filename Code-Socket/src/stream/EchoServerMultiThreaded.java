@@ -11,6 +11,17 @@ import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
 
+/**
+ * EchoServerMultiThreaded is the class that defines the Server on which Clients connect
+ * 
+ * A EchoServerMultiThreaded is composed of :
+ * <ul>
+ * <li>A ServerSocket : socket on which clients establish the first connection</li>
+ * <li>A Socket : socket where the client will contact the server</li>
+ * </ul>
+ * 
+ * @author Camille MIGOZZI & Karina DU
+ */
 public class EchoServerMultiThreaded {
 	public static void main(String args[]) {
 		ServerSocket connectionSocket;

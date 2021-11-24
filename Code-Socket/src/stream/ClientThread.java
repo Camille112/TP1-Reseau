@@ -1,16 +1,26 @@
-/***
- * ClientThread
- * Example of a TCP server
- * Date: 14/12/08
- * Authors:
- */
-
 package stream;
 
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
+/**
+ * ClientThread is the class that defines a client on the server side
+ * 
+ * A ClientThread is composed of:
+ * <ul>
+ * <li>A Socket : socket to which the client is connected and on which messages between the server and the client are exchanged</li>
+ * <li>A BufferedReader socIn : connected to the socket and receives data in form of Strings</li>
+ * <li>A PrintStream socOut : connected to the socket and sends data in form of Strings</li>
+ * <li>A String : username of the Client</li>
+ * <li>A ChatGroup : the general ChatGroup on which all Clients are connected</li>
+ * <li>A ArrayList of ChatGroup : list of the groups of which the client is a member</li>
+ * </ul>
+ * 
+ * ClientThread inherits Thread
+ * 
+ * @author Camille MIGOZZI & Karina DU
+ */
 public class ClientThread extends Thread {
 	private Socket clientSocket;
 	private BufferedReader socIn;
@@ -19,6 +29,10 @@ public class ClientThread extends Thread {
 	public static ChatGroup general = null;
 	private ArrayList<ChatGroup> myGroups = new ArrayList<ChatGroup>();
 
+	/**
+	 * Class constructor.
+	 * Initializes : Socket, socIn, socOut, clientUsername, myGroups
+	 */
 	ClientThread(Socket s, ChatGroup generalChat) {
 		this.clientSocket = s;
 		general = generalChat;
@@ -26,16 +40,6 @@ public class ClientThread extends Thread {
 			this.socIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			this.socOut = new PrintStream(clientSocket.getOutputStream());
 			this.clientUsername = socIn.readLine();
-			
-//			boolean originalUsername = true;
-//			while(!general.isNewUser(clientUsername)) {
-//				clientUsername = clientUsername + "1";
-//				originalUsername = false;
-//			}
-//			
-//			if(!originalUsername) {
-//				socOut.println("#NEWUSERNAME#" + clientUsername);
-//			}
 
 			myGroups.add(general);
 			for (ChatGroup cg : general.getAllGroups()) {
@@ -50,18 +54,24 @@ public class ClientThread extends Thread {
 		}
 	}
 
+	/**
+	 * Attribute socOut getter.
+	 * @return PrintStream.
+	 */
 	public PrintStream getSocOut() {
 		return socOut;
 	}
 
+	/**
+	 * Attribute clientUsername getter.
+	 * @return String.
+	 */
 	public String getClientUsername() {
 		return clientUsername;
 	}
 
 	/**
-	 * receives a request from client then sends an echo to the client
-	 * 
-	 * @param clientSocket the client socket
+	 * This method receives a request from client, depending the request the action differs
 	 **/
 	public void run() {
 		while (clientSocket.isConnected()) {
@@ -120,10 +130,17 @@ public class ClientThread extends Thread {
 		}
 	}
 	
+	/**
+	 * This method adds a group to myGroups
+	 * @param group The ChatGroup
+	 */
 	public void addGroup(ChatGroup group) {
         myGroups.add(group);
     }
 
+	/**
+	 * This method closes the Socket, the BufferedReader and the PrintStream
+	 */
 	public void closeEverything() {
 		try {
 			socIn.close();
